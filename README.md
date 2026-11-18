@@ -1,5 +1,9 @@
 # Xailoo Uyanış: web sitesi açılış animasyonu
 
+**Canlı önizleme:** https://tahircanyildiz.github.io/xailoo-web-uyanis/
+- A. Kapılı, sesli: https://tahircanyildiz.github.io/xailoo-web-uyanis/demo-kapili.html
+- B. Kapısız, sessiz: https://tahircanyildiz.github.io/xailoo-web-uyanis/demo-sessiz.html
+
 Bu paket, Xailoo mobil uygulamasının açılış animasyonunun ("Uyanış") web sürümü. Site açılırken simsiyah ekranda Xailoo oyuncağının LED yüzü uyanır, ardından XAILOO logosu ve alt yazı belirir. Görüntüyle birlikte imza sesi çalar. Animasyon yaklaşık 6,75 saniye sürer, sonra siyah katman kararıp kalkar ve site görünür.
 
 Zamanlama, LED desenleri, renkler ve oranlar uygulamadaki kaynakla aynıdır. Hiçbir kütüphane gerektirmez: tek bir JS dosyası, tek bir CSS dosyası, bir logo ve bir ses dosyası. Herhangi bir siteye eklenebilir: düz HTML, WordPress, React/Next.js ya da başka bir altyapı.
