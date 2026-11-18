@@ -11,7 +11,7 @@
   <!-- 2) İlk boyamadan önce karar: oynatılacaksa siyah katman ilk karede görünür, site bir an bile görünmez -->
   <script>
     (function (d, w) {
-      var REPEAT = 'session'; // 'session' | 'day' | 'always'
+      var REPEAT = 'always'; // önizleme sayfası her açılışta oynar; sitede 'session' önerilir (README)
       var c = 'xu-play';
       try {
         var k = 'xailoo-uyanis';
@@ -70,6 +70,7 @@
   <script>
     var q = new URLSearchParams(location.search);
     XailooUyanis.start({
+      repeat: 'always',   // önizleme: her açılışta (sitede 'session')
       gate: false,   // site açılınca hemen başlar
       sound: false,  // ses yok, yalnız görüntü
       freezeAt: q.has('kare') ? Number(q.get('kare')) : undefined,   // yalnız inceleme için
