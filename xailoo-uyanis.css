@@ -1,0 +1,93 @@
+/* Xailoo Uyanış — web sitesi açılış animasyonu. Kullanım: README.md */
+
+/* Katman yalnızca oynatılacaksa görünür (<head>'deki kısa betik ya da xailoo-uyanis.js <html>'e xu-play ekler).
+   JavaScript kapalıysa ya da bu oturumda zaten görüldüyse hiç görünmez. */
+#xailoo-uyanis { display: none; }
+
+.xu-play #xailoo-uyanis {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  background: #000;
+  opacity: 1;
+  transition: opacity 400ms linear;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Animasyon sürerken sayfa kaymasın */
+html.xu-play,
+html.xu-play body { overflow: hidden !important; }
+
+#xailoo-uyanis.xu-fade { opacity: 0; pointer-events: none; }
+
+#xailoo-uyanis .xu-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Logonun altındaki alt yazı. Boyutu, yeri ve belirme hareketi betikten gelir */
+#xailoo-uyanis .xu-tagline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  white-space: pre;
+  color: #c0dbd9;
+  font-family: var(--xu-font, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif);
+  font-weight: 500;
+  opacity: 0;
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
+/* Düğmeler: Geç, Sesi aç, (isteğe bağlı) Xailoo'yu uyandır */
+#xailoo-uyanis .xu-btn {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 9px 16px;
+  border: 1px solid rgba(192, 219, 217, 0.28);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #c0dbd9;
+  font: 500 13px/1 var(--xu-font, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif);
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  opacity: 0.75;
+  transition: opacity 150ms ease, background-color 150ms ease;
+}
+#xailoo-uyanis .xu-btn:hover { opacity: 1; background: rgba(255, 255, 255, 0.1); }
+#xailoo-uyanis .xu-btn:focus-visible { outline: 2px solid #41dbdb; outline-offset: 2px; opacity: 1; }
+#xailoo-uyanis [hidden] { display: none !important; }
+
+#xailoo-uyanis .xu-skip {
+  right: max(16px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  animation: xu-appear 400ms ease 600ms backwards;
+}
+#xailoo-uyanis .xu-sound {
+  left: max(16px, env(safe-area-inset-left));
+  bottom: max(16px, env(safe-area-inset-bottom));
+}
+#xailoo-uyanis .xu-gate {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 13px 24px;
+  font-size: 15px;
+  opacity: 0.9;
+}
+
+@keyframes xu-appear { from { opacity: 0; } to { opacity: 0.75; } }
+
+@media (prefers-reduced-motion: reduce) {
+  #xailoo-uyanis .xu-skip { animation: none; }
+}

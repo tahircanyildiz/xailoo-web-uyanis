@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Xailoo Uyanış · kapısız, sessiz</title>
+
+  <!-- 1) Stil -->
+  <link rel="stylesheet" href="xailoo-uyanis.css">
+
+  <!-- 2) İlk boyamadan önce karar: oynatılacaksa siyah katman ilk karede görünür, site bir an bile görünmez -->
+  <script>
+    (function (d, w) {
+      var REPEAT = 'session'; // 'session' | 'day' | 'always'
+      var c = 'xu-play';
+      try {
+        var k = 'xailoo-uyanis';
+        if (REPEAT === 'session' && w.sessionStorage.getItem(k) === '1') { c = 'xu-skip'; }
+        if (REPEAT === 'day' && Date.now() - Number(w.localStorage.getItem(k)) < 864e5) { c = 'xu-skip'; }
+      } catch (e) { /* depolama kapalı: oynat */ }
+      d.documentElement.classList.add(c);
+      // Emniyet: animasyon betiği 10 sn içinde başlamazsa katman kalkar, site kilitli kalmaz
+      if (c === 'xu-play') {
+        setTimeout(function () { if (!w.XailooUyanisStarted) { d.documentElement.classList.remove('xu-play'); } }, 10000);
+      }
+    })(document, window);
+  </script>
+
+  <!-- Yalnızca bu demo sayfasının görünümü -->
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; background: #0d0d0d; color: #e8f2f1; font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    header { display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; border-bottom: 1px solid #1f3f44; }
+    header img { height: 22px; }
+    main { max-width: 760px; margin: 0 auto; padding: 56px 24px 96px; }
+    h1 { font-size: clamp(28px, 5vw, 44px); line-height: 1.15; margin: 0 0 16px; color: #c0dbd9; }
+    p { color: #a9c3c1; }
+    .panel { margin-top: 40px; padding: 20px; border: 1px solid #1f3f44; border-radius: 14px; background: #121a1a; }
+    .panel h2 { margin: 0 0 8px; font-size: 16px; color: #c0dbd9; }
+    .panel a, .panel button { color: #41dbdb; }
+    .panel button { background: none; border: 1px solid #2f5f58; border-radius: 999px; padding: 8px 16px; font: inherit; cursor: pointer; }
+    .panel ul { padding-left: 18px; margin: 8px 0 0; }
+    code { background: #1f2a2a; padding: 1px 6px; border-radius: 6px; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <!-- 3) Katman: <body>'nin en başında -->
+  <div id="xailoo-uyanis"></div>
+
+  <header>
+    <img src="assets/xailoo-logo.png" alt="Xailoo">
+    <span>kapısız, sessiz</span>
+  </header>
+  <main>
+    <h1>Kapısız, sessiz sürüm</h1>
+    <p>Site açılınca göz animasyonu hemen ve sessiz oynar; ziyaretçinin hiçbir şeye basması gerekmez. Animasyon bitince siyah katman kararıp kalkar ve sayfa kullanılabilir olur.</p>
+
+    <div class="panel">
+      <h2>Deneme</h2>
+      <p><button type="button" id="tekrar">Animasyonu tekrar oynat</button></p>
+      <ul>
+        <li>Diğer sürüm: <a href="demo-kapili.html">kapılı, sesli</a></li>
+        <li>Tek bir kareyi incelemek için: <a href="?kare=1900">?kare=1900</a> (ms; ör. 700, 1100, 1900, 2400, 3500, 5200)</li>
+      </ul>
+    </div>
+  </main>
+
+  <!-- 4) Betik ve başlatma -->
+  <script src="xailoo-uyanis.js"></script>
+  <script>
+    var q = new URLSearchParams(location.search);
+    XailooUyanis.start({
+      gate: false,   // site açılınca hemen başlar
+      sound: false,  // ses yok, yalnız görüntü
+      freezeAt: q.has('kare') ? Number(q.get('kare')) : undefined,   // yalnız inceleme için
+      onEnd: function () { console.log('[xailoo-uyanis] bitti'); },
+    });
+
+    document.getElementById('tekrar').addEventListener('click', function () {
+      try { sessionStorage.removeItem('xailoo-uyanis'); localStorage.removeItem('xailoo-uyanis'); } catch (e) {}
+      location.href = location.pathname;
+    });
+  </script>
+</body>
+</html>
